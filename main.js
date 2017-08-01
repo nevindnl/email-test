@@ -7,8 +7,10 @@
 
 function render() {
   // Your Code Here
-
-  renderEmails();
+  fetchEmailsFromDatabase(allEmails => {
+    const emails = getFilteredEmails(allEmails);
+    renderEmails(emails);
+  });
 }
 
 /*
@@ -24,7 +26,13 @@ function render() {
 */
 
 function getFilteredEmails(allEmails = [], searchInputs = getSearchInputs()) {
-  // Your Code Here
+  return allEmails.filter(email => (
+    Object.values(email).some(value => (
+      searchInputs.some(input => (
+        value.includes(input)
+      ))
+    ))
+  ));
 }
 
 //  ------------ Do Not Make Changes Below This Line ------------
